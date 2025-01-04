@@ -1,0 +1,186 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+// Structure to store patient details
+struct Patient {
+    int id;
+    string name;
+    int age;
+    string disease;
+    string admissionDate;
+};
+// Structure to store staff details
+struct Staff {
+    int id;
+    string name;
+    string role;
+    string schedule;
+};
+// Structure for inventory items
+struct InventoryItem {
+    string name;
+    int quantity;
+};
+// Structure for appointments
+struct Appointment {
+    int patientId;
+    string doctorName;
+    string date;
+    string time;
+};
+class HospitalManagementSystem {
+private:
+    vector<Patient> patients;
+    vector<Staff> staffList;
+    vector<InventoryItem> inventory;
+    vector<Appointment> appointments;
+    double totalBilling;
+public:
+    HospitalManagementSystem() : totalBilling(0.0) {}
+    // 1. Patient Management
+    void addPatient() {
+        Patient p;  // Correctly declare p as a Patient object
+        cout << "Enter Patient ID: ";
+        cin >> p.id;
+        cin.ignore();
+        cout << "Enter Name: ";
+        getline(cin, p.name);
+        cout << "Enter Age: ";
+        cin >> p.age;
+        cin.ignore();
+        cout << "Enter Disease: ";
+        getline(cin, p.disease);
+        cout << "Enter Admission Date (dd/mm/yyyy): ";
+        cin >> p.admissionDate;
+        patients.push_back(p);
+        cout << "Patient added successfully.\n";
+    }
+
+    void listPatients() {
+        cout << "\n--- Patient List ---\n";
+        for (const Patient& p : patients) {  // Ensure p is a Patient object
+            cout << "ID: " << p.id << ", Name: " << p.name << ", Age: " << p.age
+                 << ", Disease: " << p.disease << ", Admission Date: " << p.admissionDate << "\n";
+        }
+    }
+    // 2. Staff Scheduling
+    void addStaff() {
+        Staff s;  // Correctly declare s as a Staff object
+        cout << "Enter Staff ID: ";
+        cin >> s.id;
+        cin.ignore();
+        cout << "Enter Name: ";
+        getline(cin, s.name);
+        cout << "Enter Role: ";
+        getline(cin, s.role);
+        cout << "Enter Schedule (e.g., Morning/Evening): ";
+        getline(cin, s.schedule);
+        staffList.push_back(s);
+        cout << "Staff added successfully.\n";
+    }
+    void listStaff() {
+        cout << "\n--- Staff List ---\n";
+        for (const Staff& s : staffList) {  // Ensure s is a Staff object
+            cout << "ID: " << s.id << ", Name: " << s.name << ", Role: " << s.role
+                 << ", Schedule: " << s.schedule << "\n";
+        }
+    }
+    // 3. Inventory Management
+    void addInventoryItem() {
+        InventoryItem item;  // Correctly declare item as an InventoryItem object
+        cout << "Enter Item Name: ";
+        cin >> item.name;
+        cout << "Enter Quantity: ";
+        cin >> item.quantity;
+        inventory.push_back(item);
+        cout << "Inventory item added successfully.\n";
+    }
+    void listInventory() {
+        cout << "\n--- Inventory List ---\n";
+        for (const InventoryItem& item : inventory) {
+            cout << "Item: " << item.name << ", Quantity: " << item.quantity << "\n";
+        }
+    }
+    // 4. Billing System
+    void generateBill() {
+        int patientId;
+        double billAmount;
+        cout << "Enter Patient ID: ";
+        cin >> patientId;
+        cout << "Enter Bill Amount: ";
+        cin >> billAmount;
+        totalBilling += billAmount;
+        cout << "Bill generated successfully for Patient ID: " << patientId << "\n";
+    }
+
+    void showTotalBilling() {
+        cout << "Total Billing: $" << totalBilling << "\n";
+    }
+
+    // 5. Appointment Scheduling
+    void scheduleAppointment() {
+        Appointment appt;  // Correctly declare appt as an Appointment object
+        cout << "Enter Patient ID: ";
+        cin >> appt.patientId;
+        cin.ignore();
+        cout << "Enter Doctor's Name: ";
+        getline(cin, appt.doctorName);
+        cout << "Enter Appointment Date (dd/mm/yyyy): ";
+        cin >> appt.date;
+        cout << "Enter Appointment Time (hh:mm): ";
+        cin >> appt.time;
+        appointments.push_back(appt);
+        cout << "Appointment scheduled successfully.\n";
+    }
+    void listAppointments() {
+        cout << "\n--- Appointments ---\n";
+        for (const Appointment& appt : appointments) {
+            cout << "Patient ID: " << appt.patientId << ", Doctor: " << appt.doctorName
+                 << ", Date: " << appt.date << ", Time: " << appt.time << "\n";
+        }
+    }
+    // 6. Emergency Services Tracking
+    void emergencyService() {
+        cout << "\n--- Emergency Services ---\n";
+        cout << "Ambulance service available 24/7. Dial 911 for emergencies.\n";
+    }
+    // 7. Report Generation
+    void generateReport() {
+        cout << "\n--- Hospital Report ---\n";
+        cout << "Total Patients: " << patients.size() << "\n";
+        cout << "Total Staff: " << staffList.size() << "\n";
+        cout << "Total Inventory Items: " << inventory.size() << "\n";
+        cout << "Total Billing: $" << totalBilling << "\n";
+    }
+};
+int main () {
+    HospitalManagementSystem hms;
+    int choice;
+    do {
+        cout << "\n--- Hospital Management System ---\n";
+        cout << "1. Add Patient\n2. List Patients\n3. Add Staff\n4. List Staff\n";
+        cout << "5. Add Inventory Item\n6. List Inventory\n7. Generate Bill\n";
+        cout << "8. Show Total Billing\n9. Schedule Appointment\n10. List Appointments\n";
+        cout << "11. Emergency Services\n12. Generate Report\n13. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        switch (choice) {
+            case 1: hms.addPatient(); break;
+            case 2: hms.listPatients(); break;
+            case 3: hms.addStaff(); break;
+            case 4: hms.listStaff(); break;
+            case 5: hms.addInventoryItem(); break;
+            case 6: hms.listInventory(); break;
+            case 7: hms.generateBill(); break;
+            case 8: hms.showTotalBilling(); break;
+            case 9: hms.scheduleAppointment(); break;
+            case 10: hms.listAppointments(); break;
+            case 11: hms.emergencyService(); break;
+            case 12: hms.generateReport(); break;
+            case 13: cout << "Exiting...\n"; break;
+            default: cout << "Invalid choice! Try again.\n";
+        }
+    } while (choice!= 13);
+   return 0;
+}
